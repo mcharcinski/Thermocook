@@ -10,7 +10,7 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
-  <!-- Skrypty Firebase -->
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
@@ -53,8 +53,11 @@
     const IconLogOut = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>;
     const IconGift = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>;
     const IconInstagram = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>;
+    const IconZap = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>;
+    const IconClock = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>;
+    const IconHeart = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>;
 
-    // Zaktualizowane nazwy plików
+    // Oferty
     const offersData = [
       {
         id: 1,
@@ -123,6 +126,7 @@
     ];
 
     function App() {
+      // activeView: 'landing', 'oferta', 'admin'
       const [activeView, setActiveView] = useState('landing');
       const [isScrolled, setIsScrolled] = useState(false);
       
@@ -141,7 +145,7 @@
       const [isLoggingIn, setIsLoggingIn] = useState(false);
 
       useEffect(() => {
-        const handleScroll = () => setIsScrolled(window.scrollY > 50);
+        const handleScroll = () => setIsScrolled(window.scrollY > 40);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
       }, []);
@@ -155,6 +159,11 @@
         });
         return () => unsubscribe();
       }, [activeView]);
+
+      const navigateTo = (view) => {
+        setActiveView(view);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
 
       const fetchLeads = async () => {
         setIsLoadingLeads(true);
@@ -212,57 +221,64 @@
       };
 
       return (
-        <div className="min-h-screen bg-gray-50 text-gray-900 selection:bg-green-200">
+        <div className="min-h-screen bg-gray-50 text-gray-900 selection:bg-green-200 flex flex-col justify-between">
           
-          <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || activeView === 'admin' ? 'bg-white shadow-sm py-3' : 'bg-transparent py-5'}`}>
+          {/* NAWIGACJA */}
+          <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || activeView !== 'landing' ? 'bg-white shadow-sm py-3' : 'bg-transparent py-5'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
-              <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo(0,0)}>
+              <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigateTo('landing')}>
                 <div className="w-10 h-10 bg-[#00a859] text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg">Tc</div>
                 <span className="text-2xl font-extrabold tracking-tight">Thermo<span className="text-[#00a859]">cook</span></span>
               </div>
               <div className="hidden md:flex items-center gap-6 font-medium">
-                {activeView === 'landing' ? (
-                  <>
-                    <a href="#oferta" className="hover:text-[#00a859] transition">Oferta</a>
-                    <a href="#kontakt" className="hover:text-[#00a859] transition">Kontakt</a>
-                    <a href="https://www.instagram.com/thermocook.warszawa" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition flex items-center gap-1">
-                      <IconInstagram /> Instagram
-                    </a>
-                    <button onClick={() => setActiveView('admin')} className="text-gray-400 hover:text-gray-900 flex items-center gap-1 ml-4 border-l border-gray-200 pl-6">
-                      <IconSettings /> Panel CRM
-                    </button>
-                    <a href="#kontakt" className="bg-[#00a859] text-white px-6 py-2.5 rounded-full hover:bg-green-600 transition shadow-md">Umów pokaz</a>
-                  </>
-                ) : (
-                  <button onClick={() => setActiveView('landing')} className="bg-gray-900 text-white px-6 py-2.5 rounded-full hover:bg-gray-800 transition shadow-md">
-                    Wróć na stronę
-                  </button>
-                )}
+                <button 
+                  onClick={() => navigateTo('landing')} 
+                  className={`transition ${activeView === 'landing' ? 'text-[#00a859] font-bold' : 'hover:text-[#00a859]'}`}
+                >
+                  O Thermomix
+                </button>
+                <button 
+                  onClick={() => navigateTo('oferta')} 
+                  className={`transition ${activeView === 'oferta' ? 'text-[#00a859] font-bold' : 'hover:text-[#00a859]'}`}
+                >
+                  Aktualna oferta
+                </button>
+                <a href="#kontakt" className="hover:text-[#00a859] transition">Kontakt</a>
+                <a href="https://www.instagram.com/thermocook.warszawa" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition flex items-center gap-1">
+                  <IconInstagram /> Instagram
+                </a>
+                <button onClick={() => navigateTo('admin')} className="text-gray-400 hover:text-gray-900 flex items-center gap-1 ml-2 border-l border-gray-200 pl-4">
+                  <IconSettings /> CRM
+                </button>
+                <a href="#kontakt" className="bg-[#00a859] text-white px-5 py-2.5 rounded-full hover:bg-green-600 transition shadow-md">
+                  Umów pokaz
+                </a>
               </div>
             </div>
           </nav>
 
+          {/* WIDOK: STRONA GŁÓWNA (PREZENTACJA I MOŻLIWOŚCI) */}
           {activeView === 'landing' && (
             <main>
-              {/* HERO SECTION */}
+              {/* HERO */}
               <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 items-center">
                   <div>
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 text-green-700 font-semibold text-sm mb-6">
-                      <IconStar /> Autoryzowany Przedstawiciel
+                      <IconStar /> Autoryzowany Przedstawiciel Thermomix
                     </div>
                     <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
-                      Twój nowy <br/><span className="text-[#00a859]">wymiar gotowania.</span>
+                      Nowa era <br/><span className="text-[#00a859]">Twojej kuchni.</span>
                     </h1>
                     <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                      Poznaj Thermomix TM7 z Michałem – Twoim osobistym doradcą w Warszawie i okolicach. Nowoczesne technologie i wyjątkowe raty czekają na Ciebie.
+                      Zastąp kilkanaście urządzeń kuchennych jednym intuicyjnym robotem. Odkryj przyjemność z gotowania, oszczędź cenny czas i zaskocz bliskich potrawami jak z najlepszej restauracji.
                     </p>
-                    <div className="flex gap-4">
+                    <div className="flex flex-wrap gap-4">
+                      <button onClick={() => navigateTo('oferta')} className="inline-flex items-center gap-2 bg-[#00a859] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-600 transition shadow-xl">
+                        Zobacz aktualną ofertę <IconChevron />
+                      </button>
                       <a href="#kontakt" className="inline-flex items-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-800 transition shadow-xl">
-                        Umów darmowy pokaz <IconChevron />
-                      </a>
-                      <a href="#oferta" className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 border-2 border-gray-100 transition shadow-sm hidden sm:flex">
-                        Zobacz cennik
+                        Umów bezpłatny pokaz
                       </a>
                     </div>
                   </div>
@@ -274,7 +290,7 @@
                       loop 
                       muted 
                       playsInline 
-                      className="relative rounded-3xl shadow-2xl w-full object-cover h-[500px]"
+                      className="relative rounded-3xl shadow-2xl w-full object-cover h-[520px]"
                     >
                       <source src="tm7.mp4" type="video/mp4" />
                       Twoja przeglądarka nie obsługuje wideo.
@@ -283,139 +299,148 @@
                 </div>
               </section>
 
-              {/* SEKCJA OFERTA */}
-              <section id="oferta" className="py-24 bg-gray-50">
+              {/* MOŻLIWOŚCI I ZALETY */}
+              <section className="py-24 bg-gray-50 border-t border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6">
-                  <div className="text-center mb-16 max-w-3xl mx-auto">
-                    <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 text-gray-900">Wybierz ofertę z najlepszą korzyścią dla Ciebie!</h2>
-                    <p className="text-xl text-gray-600 font-medium">
-                      Płatność gotówką, przelewem lub <span className="text-[#00a859] font-bold">dogodne raty.</span>
-                    </p>
+                  <div className="text-center max-w-3xl mx-auto mb-16">
+                    <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Wszystko w jednym urządzeniu</h2>
+                    <p className="text-lg text-gray-600">Thermomix to nie tylko robot – to kompletna kulinarna rewolucja w Twoim domu.</p>
                   </div>
-                  
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {offersData.map(offer => (
-                      <div key={offer.id} className={`bg-white rounded-3xl shadow-sm border ${offer.special ? 'border-pink-300 ring-4 ring-pink-50' : (offer.highlight ? 'border-[#00a859]/30 ring-4 ring-[#00a859]/5' : 'border-gray-100')} overflow-hidden flex flex-col transition hover:shadow-lg`}>
-                        
-                        <div className={`p-6 flex justify-center items-center h-56 ${offer.special ? 'bg-pink-50' : 'bg-gray-50'}`}>
-                          <img 
-                            src={offer.img} 
-                            alt={offer.title} 
-                            className="max-h-full object-contain mix-blend-multiply"
-                            onError={(e) => {
-                              e.target.style.display = 'none';
-                              e.target.nextSibling.style.display = 'flex';
-                            }}
-                          />
-                          <div className="hidden flex-col items-center text-gray-400">
-                            <span className="text-sm font-medium">Brak pliku {offer.img}</span>
-                          </div>
-                        </div>
 
-                        <div className="p-8 flex flex-col flex-grow">
-                          <div className="text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Opcja {offer.id}</div>
-                          <h3 className={`text-xl font-extrabold mb-6 min-h-[3.5rem] leading-tight ${offer.special ? 'text-pink-600' : 'text-gray-900'}`}>{offer.title}</h3>
-                          
-                          <div className="mb-6 pb-6 border-b border-gray-100">
-                            <div className="text-4xl font-extrabold text-gray-900 mb-2">{offer.price}</div>
-                            <div className="text-gray-600">
-                              Rata: <span className="font-bold text-gray-900">{offer.installment}</span>
-                              <div className="text-sm text-gray-500">{offer.instType}</div>
-                            </div>
-                          </div>
-
-                          <div className="flex-grow">
-                            <div className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                              <IconGift /> Co otrzymujesz?
-                            </div>
-                            <ul className="space-y-3 mb-8">
-                              {offer.items.map((item, idx) => (
-                                <li key={idx} className="flex gap-3 text-sm text-gray-600 leading-relaxed">
-                                  <span className="text-[#00a859] font-bold mt-0.5">•</span> {item}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          <div className={`mt-auto p-4 rounded-2xl text-center ${offer.savings !== '0 zł' ? 'bg-[#00a859]/10 text-[#00a859]' : 'bg-gray-100 text-gray-600'}`}>
-                            <div className="text-sm font-bold uppercase tracking-wide mb-1">Korzyść finansowa</div>
-                            <div className="text-2xl font-extrabold">{offer.savings}</div>
-                          </div>
-                          
-                        </div>
+                  <div className="grid md:grid-cols-3 gap-8">
+                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                      <div className="w-14 h-14 bg-green-50 text-[#00a859] rounded-2xl flex items-center justify-center mb-6">
+                        <IconClock />
                       </div>
-                    ))}
+                      <h3 className="text-2xl font-bold mb-3">Oszczędność czasu</h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        Przygotuj obiad dla całej rodziny w 20 minut. Urządzenie samo kontroluje temperaturę, miesza, sieka i pilnuje czasu gotowania za Ciebie.
+                      </p>
+                    </div>
+
+                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                      <div className="w-14 h-14 bg-green-50 text-[#00a859] rounded-2xl flex items-center justify-center mb-6">
+                        <IconHeart />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3">Zdrowe & świeże posiłki</h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        Pełna kontrola nad składnikami bez konserwantów. Piecz własny chleb, przygotowuj fit desery, dania na parze (Varoma) i domowe przetwory.
+                      </p>
+                    </div>
+
+                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                      <div className="w-14 h-14 bg-green-50 text-[#00a859] rounded-2xl flex items-center justify-center mb-6">
+                        <IconZap />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3">Tysiące przepisów Cookidoo</h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        Ekran dotykowy prowadzi Cię krok po kroku przez każdy przepis. Wbudowana waga, intuicyjna nawigacja i stała inspiracja każdego dnia.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* BANER ZAPROSZENIA NA POKAZ */}
+                  <div className="mt-16 bg-gray-900 rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div className="max-w-2xl">
+                      <h3 className="text-3xl font-extrabold mb-3">Chcesz zobaczyć go w akcji przed zakupem?</h3>
+                      <p className="text-gray-400 text-lg">Umów się ze mną na bezpłatną, niezobowiązującą prezentację w Warszawie i okolicach. Ugotujemy coś pysznego w Twojej własnej kuchni!</p>
+                    </div>
+                    <a href="#kontakt" className="whitespace-nowrap bg-[#00a859] hover:bg-green-600 text-white font-bold px-8 py-4 rounded-full transition shadow-lg">
+                      Zaproś mnie na pokaz
+                    </a>
                   </div>
                 </div>
               </section>
-
-              {/* SEKCJA KONTAKTOWA (Telefon, Mail, Instagram - klikalne) */}
-              <footer id="kontakt" className="bg-gray-900 text-white pt-24 pb-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-16">
-                  <div>
-                    <h2 className="text-3xl font-extrabold mb-6">Zaproś mnie do swojej kuchni</h2>
-                    <p className="text-gray-400 mb-8 text-lg">Zostaw kontakt, a oddzwonię do Ciebie, by ustalić szczegóły niezobowiązującej prezentacji (Warszawa i okolice).</p>
-                    
-                    <div className="space-y-6">
-                      
-                      {/* Przycisk Telefonu */}
-                      <a href="tel:+48608485105" className="flex items-center gap-4 text-xl font-medium group w-fit text-gray-300 hover:text-[#00a859] transition">
-                        <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-[#00a859] group-hover:bg-[#00a859] group-hover:text-white transition-all shadow-lg"><IconPhone /></div>
-                        Michał +48 608 485 105
-                      </a>
-
-                      {/* Przycisk E-mail */}
-                      <a href="mailto:kontakt@thermocook.pl" className="flex items-center gap-4 text-xl font-medium group w-fit text-gray-300 hover:text-[#00a859] transition">
-                        <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-[#00a859] group-hover:bg-[#00a859] group-hover:text-white transition-all shadow-lg"><IconMail /></div>
-                        kontakt@thermocook.pl
-                      </a>
-                      
-                      {/* Przycisk Instagrama */}
-                      <a href="https://www.instagram.com/thermocook.warszawa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-xl font-medium group w-fit text-gray-300 hover:text-pink-500 transition">
-                        <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-pink-500 group-hover:bg-pink-500 group-hover:text-white transition-all shadow-lg"><IconInstagram /></div>
-                        @thermocook.warszawa
-                      </a>
-                      
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-800 p-8 rounded-3xl">
-                    <h3 className="text-2xl font-bold mb-6">Zostaw wiadomość</h3>
-                    {submitSuccess ? (
-                      <div className="bg-[#00a859]/20 text-[#00a859] p-6 rounded-xl flex items-center gap-3 border border-[#00a859]/30">
-                        <IconCheck />
-                        <div>
-                          <p className="font-bold">Zgłoszenie wysłane!</p>
-                          <p className="text-sm">Zajrzyj teraz do panelu CRM na górze strony.</p>
-                        </div>
-                      </div>
-                    ) : (
-                      <form className="space-y-4" onSubmit={handleContactSubmit}>
-                        <input type="text" placeholder="Twoje imię" value={leadName} onChange={e=>setLeadName(e.target.value)} className="w-full bg-gray-900 border-none rounded-xl px-4 py-4 text-white placeholder-gray-500 focus:ring-2 focus:ring-[#00a859] outline-none" required />
-                        <input type="tel" placeholder="Numer telefonu" value={leadPhone} onChange={e=>setLeadPhone(e.target.value)} className="w-full bg-gray-900 border-none rounded-xl px-4 py-4 text-white placeholder-gray-500 focus:ring-2 focus:ring-[#00a859] outline-none" required />
-                        <button type="submit" disabled={isSubmitting} className="w-full bg-[#00a859] text-white font-bold py-4 rounded-xl hover:bg-green-600 transition disabled:opacity-50">
-                          {isSubmitting ? 'Wysyłanie...' : 'Wyślij prośbę o kontakt'}
-                        </button>
-                      </form>
-                    )}
-                  </div>
-                </div>
-              </footer>
             </main>
           )}
 
-          {/* CRM ADMIN PANEL */}
+          {/* WIDOK: AKTUALNA OFERTA */}
+          {activeView === 'oferta' && (
+            <main className="pt-32 pb-24 bg-gray-50">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                <div className="text-center mb-16 max-w-3xl mx-auto">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 text-green-700 font-semibold text-sm mb-4">
+                    <IconGift /> Sprawdź aktualne pakiety i promocje
+                  </div>
+                  <h1 className="text-4xl lg:text-5xl font-extrabold mb-6 text-gray-900">Aktualna Oferta</h1>
+                  <p className="text-xl text-gray-600 font-medium">
+                    Płatność gotówką, przelewem lub <span className="text-[#00a859] font-bold">dogodne raty.</span>
+                  </p>
+                </div>
+                
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {offersData.map(offer => (
+                    <div key={offer.id} className={`bg-white rounded-3xl shadow-sm border ${offer.special ? 'border-pink-300 ring-4 ring-pink-50' : (offer.highlight ? 'border-[#00a859]/30 ring-4 ring-[#00a859]/5' : 'border-gray-100')} overflow-hidden flex flex-col transition hover:shadow-lg`}>
+                      
+                      <div className={`p-6 flex justify-center items-center h-56 ${offer.special ? 'bg-pink-50' : 'bg-gray-50'}`}>
+                        <img 
+                          src={offer.img} 
+                          alt={offer.title} 
+                          className="max-h-full object-contain mix-blend-multiply"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                        <div className="hidden flex-col items-center text-gray-400">
+                          <span className="text-sm font-medium">Brak pliku {offer.img}</span>
+                        </div>
+                      </div>
+
+                      <div className="p-8 flex flex-col flex-grow">
+                        <div className="text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Opcja {offer.id}</div>
+                        <h3 className={`text-xl font-extrabold mb-6 min-h-[3.5rem] leading-tight ${offer.special ? 'text-pink-600' : 'text-gray-900'}`}>{offer.title}</h3>
+                        
+                        <div className="mb-6 pb-6 border-b border-gray-100">
+                          <div className="text-4xl font-extrabold text-gray-900 mb-2">{offer.price}</div>
+                          <div className="text-gray-600">
+                            Rata: <span className="font-bold text-gray-900">{offer.installment}</span>
+                            <div className="text-sm text-gray-500">{offer.instType}</div>
+                          </div>
+                        </div>
+
+                        <div className="flex-grow">
+                          <div className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                            <IconGift /> Co otrzymujesz?
+                          </div>
+                          <ul className="space-y-3 mb-8">
+                            {offer.items.map((item, idx) => (
+                              <li key={idx} className="flex gap-3 text-sm text-gray-600 leading-relaxed">
+                                <span className="text-[#00a859] font-bold mt-0.5">•</span> {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className={`mt-auto p-4 rounded-2xl text-center ${offer.savings !== '0 zł' ? 'bg-[#00a859]/10 text-[#00a859]' : 'bg-gray-100 text-gray-600'}`}>
+                          <div className="text-sm font-bold uppercase tracking-wide mb-1">Korzyść finansowa</div>
+                          <div className="text-2xl font-extrabold">{offer.savings}</div>
+                        </div>
+
+                        <a href="#kontakt" className="mt-6 block text-center bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 rounded-xl transition">
+                          Wybieram tę ofertę
+                        </a>
+                        
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </main>
+          )}
+
+          {/* CRM PANEL */}
           {activeView === 'admin' && (
-            <div className="min-h-screen pt-24 pb-12 bg-gray-50 flex flex-col">
+            <div className="min-h-screen pt-28 pb-16 bg-gray-50 flex flex-col">
               {!user ? (
-                <div className="max-w-md mx-auto px-4 w-full mt-12">
+                <div className="max-w-md mx-auto px-4 w-full mt-10">
                   <div className="bg-white rounded-3xl shadow-md border border-gray-100 p-8">
                     <div className="text-center mb-8">
                       <div className="w-16 h-16 bg-[#00a859]/10 text-[#00a859] rounded-2xl flex items-center justify-center mx-auto mb-4">
                         <IconSettings />
                       </div>
                       <h2 className="text-2xl font-extrabold text-gray-900">Panel CRM</h2>
-                      <p className="text-gray-500 mt-2">Zaloguj się, aby uzyskać dostęp</p>
+                      <p className="text-gray-500 mt-2">Zaloguj się, aby zarządzać kontaktami</p>
                     </div>
 
                     <form onSubmit={handleLogin} className="space-y-4">
@@ -439,7 +464,7 @@
                   <div className="flex justify-between items-end mb-8">
                     <div>
                       <h1 className="text-3xl font-extrabold text-gray-900">Panel CRM</h1>
-                      <p className="text-gray-500 mt-1">Zalogowano jako: <span className="font-semibold text-gray-700">{user.email}</span></p>
+                      <p className="text-gray-500 mt-1">Zalogowano: <span className="font-semibold text-gray-700">{user.email}</span></p>
                     </div>
                     <button onClick={handleLogout} className="flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-red-600 transition bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm">
                       <IconLogOut /> Wyloguj
@@ -457,7 +482,7 @@
                     ) : leads.length === 0 ? (
                       <div className="text-center py-10 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
                         <div className="flex justify-center text-gray-300 mb-3"><IconUsers /></div>
-                        <p className="font-semibold text-gray-600">Brak zgłoszeń</p>
+                        <p className="font-semibold text-gray-600">Brak nowych zgłoszeń</p>
                       </div>
                     ) : (
                       <div className="space-y-4">
@@ -485,12 +510,7 @@
               )}
             </div>
           )}
-        </div>
-      );
-    }
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-  </script>
-</body>
-</html>
+          {/* STOPKA / KONTAKT */}
+          <footer id="kontakt" className="bg-gray-900 text-white pt-24 pb-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-
