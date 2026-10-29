@@ -50,6 +50,75 @@
     const IconStar = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>;
     const IconChevron = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>;
     const IconLogOut = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>;
+    const IconGift = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>;
+
+    // Dane z Twojego cennika
+    const offersData = [
+      {
+        id: 1,
+        title: "OFERTA STANDARDOWA",
+        img: "zdj1.jpg",
+        price: "6 669 zł",
+        installment: "206,53 zł",
+        instType: "36 rat (0,6%)",
+        items: ["Thermomix TM7"],
+        savings: "0 zł"
+      },
+      {
+        id: 2,
+        title: "TM7 + DODATKOWE NACZYNIE",
+        img: "zdj2.jpg",
+        price: "6 670 zł",
+        installment: "206,56 zł",
+        instType: "36 rat (0,6%)",
+        items: ["Thermomix TM7", "Drugie kompletne naczynie miksujące za 1 zł"],
+        savings: "1 409 zł",
+        highlight: true
+      },
+      {
+        id: 3,
+        title: "TM7 + ZESTAW Z MIŁOŚCI DO CHLEBA",
+        img: "zdj3.jpg",
+        price: "6 838 zł",
+        installment: "211,76 zł",
+        instType: "36 rat (0,6%)",
+        items: ["Thermomix TM7", "Zestaw akcesoriów do pieczenia chleba", "Garnek żeliwny"],
+        savings: "230 zł"
+      },
+      {
+        id: 4,
+        title: "TM7 + ZESTAW CHLEBOWY + NACZYNIE",
+        img: "zdj4.jpg",
+        price: "6 839 zł",
+        installment: "211,79 zł",
+        instType: "36 rat (0,6%)",
+        items: ["Thermomix TM7", "Zestaw do pieczenia chleba + Garnek żeliwny", "Drugie kompletne naczynie miksujące za 1 zł"],
+        savings: "1 639 zł",
+        highlight: true
+      },
+      {
+        id: 5,
+        title: "OFERTA HALLOWEEN",
+        img: "zdj5.jpg",
+        price: "6 995 zł",
+        installment: "194,31 zł",
+        instType: "36 rat 0% (bez odsetek!)",
+        items: ["Thermomix TM7", "Sensor (wartość 495 zł)", "Forma żeliwna (ok. 200 zł)"],
+        savings: "369 zł",
+        special: true
+      },
+      {
+        id: 6,
+        title: "OFERTA KREDYTOWA STANDARD",
+        img: "zdj6.jpg",
+        price: "6 996 zł",
+        installment: "216,66 zł",
+        instType: "36 rat (0,6%)",
+        items: ["Thermomix TM7", "Sensor + Forma żeliwna", "Drugie kompletne naczynie miksujące za 1 zł"],
+        savings: "1 778 zł",
+        highlight: true
+      }
+    ];
 
     function App() {
       const [activeView, setActiveView] = useState('landing');
@@ -145,13 +214,14 @@
           
           <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || activeView === 'admin' ? 'bg-white shadow-sm py-3' : 'bg-transparent py-5'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
-              <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActiveView('landing')}>
+              <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo(0,0)}>
                 <div className="w-10 h-10 bg-[#00a859] text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg">Tc</div>
                 <span className="text-2xl font-extrabold tracking-tight">Thermo<span className="text-[#00a859]">cook</span></span>
               </div>
               <div className="hidden md:flex items-center gap-6 font-medium">
                 {activeView === 'landing' ? (
                   <>
+                    <a href="#oferta" className="hover:text-[#00a859] transition">Oferta</a>
                     <a href="#kontakt" className="hover:text-[#00a859] transition">Kontakt</a>
                     <button onClick={() => setActiveView('admin')} className="text-gray-400 hover:text-gray-900 flex items-center gap-1">
                       <IconSettings /> Panel CRM
@@ -169,6 +239,7 @@
 
           {activeView === 'landing' && (
             <main>
+              {/* HERO SECTION */}
               <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 items-center">
                   <div>
@@ -179,14 +250,18 @@
                       Twój nowy <br/><span className="text-[#00a859]">wymiar gotowania.</span>
                     </h1>
                     <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                      Poznaj Thermomix TM7 z Michałem – Twoim osobistym doradcą w Warszawie i okolicach. Nowoczesne technologie i wyjątkowe raty 0% czekają na Ciebie.
+                      Poznaj Thermomix TM7 z Michałem – Twoim osobistym doradcą w Warszawie i okolicach. Nowoczesne technologie i wyjątkowe raty czekają na Ciebie.
                     </p>
-                    <a href="#kontakt" className="inline-flex items-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-800 transition shadow-xl">
-                      Umów darmowy pokaz <IconChevron />
-                    </a>
+                    <div className="flex gap-4">
+                      <a href="#kontakt" className="inline-flex items-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-800 transition shadow-xl">
+                        Umów darmowy pokaz <IconChevron />
+                      </a>
+                      <a href="#oferta" className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 border-2 border-gray-100 transition shadow-sm hidden sm:flex">
+                        Zobacz cennik
+                      </a>
+                    </div>
                   </div>
                   
-                  {/* SEKCJA Z PODMIENIONYM FILMEM WIDEO ZAMIAST ZDJĘCIA */}
                   <div className="relative">
                     <div className="absolute inset-0 bg-[#00a859] rounded-3xl transform rotate-3 scale-105 opacity-10 blur-xl"></div>
                     <video 
@@ -200,11 +275,80 @@
                       Twoja przeglądarka nie obsługuje wideo.
                     </video>
                   </div>
-                  {/* KONIEC SEKCJI WIDEO */}
-
                 </div>
               </section>
 
+              {/* SEKCJA OFERTA */}
+              <section id="oferta" className="py-24 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                  <div className="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 text-gray-900">Wybierz ofertę z najlepszą korzyścią dla Ciebie!</h2>
+                    <p className="text-xl text-gray-600 font-medium">
+                      Płatność gotówką, przelewem lub <span className="text-[#00a859] font-bold">dogodne raty.</span>
+                    </p>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {offersData.map(offer => (
+                      <div key={offer.id} className={`bg-white rounded-3xl shadow-sm border ${offer.special ? 'border-pink-300 ring-4 ring-pink-50' : (offer.highlight ? 'border-[#00a859]/30 ring-4 ring-[#00a859]/5' : 'border-gray-100')} overflow-hidden flex flex-col transition hover:shadow-lg`}>
+                        
+                        {/* ZDJĘCIE ZESTAWU */}
+                        <div className={`p-6 flex justify-center items-center h-56 ${offer.special ? 'bg-pink-50' : 'bg-gray-50'}`}>
+                          <img 
+                            src={offer.img} 
+                            alt={offer.title} 
+                            className="max-h-full object-contain mix-blend-multiply"
+                            onError={(e) => {
+                              // Fallback jeśli zdjęcie się nie załaduje
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'flex';
+                            }}
+                          />
+                          <div className="hidden flex-col items-center text-gray-400">
+                            <span className="text-sm font-medium">Brak pliku {offer.img}</span>
+                          </div>
+                        </div>
+
+                        {/* SZCZEGÓŁY OFERTY */}
+                        <div className="p-8 flex flex-col flex-grow">
+                          <div className="text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Opcja {offer.id}</div>
+                          <h3 className={`text-xl font-extrabold mb-6 min-h-[3.5rem] leading-tight ${offer.special ? 'text-pink-600' : 'text-gray-900'}`}>{offer.title}</h3>
+                          
+                          <div className="mb-6 pb-6 border-b border-gray-100">
+                            <div className="text-4xl font-extrabold text-gray-900 mb-2">{offer.price}</div>
+                            <div className="text-gray-600">
+                              Rata: <span className="font-bold text-gray-900">{offer.installment}</span>
+                              <div className="text-sm text-gray-500">{offer.instType}</div>
+                            </div>
+                          </div>
+
+                          <div className="flex-grow">
+                            <div className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                              <IconGift /> Co otrzymujesz?
+                            </div>
+                            <ul className="space-y-3 mb-8">
+                              {offer.items.map((item, idx) => (
+                                <li key={idx} className="flex gap-3 text-sm text-gray-600 leading-relaxed">
+                                  <span className="text-[#00a859] font-bold mt-0.5">•</span> {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* KORZYŚĆ FINANSOWA */}
+                          <div className={`mt-auto p-4 rounded-2xl text-center ${offer.savings !== '0 zł' ? 'bg-[#00a859]/10 text-[#00a859]' : 'bg-gray-100 text-gray-600'}`}>
+                            <div className="text-sm font-bold uppercase tracking-wide mb-1">Korzyść finansowa</div>
+                            <div className="text-2xl font-extrabold">{offer.savings}</div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              {/* SEKCJA KONTAKTOWA */}
               <footer id="kontakt" className="bg-gray-900 text-white pt-24 pb-12">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-16">
                   <div>
@@ -240,6 +384,7 @@
             </main>
           )}
 
+          {/* CRM ADMIN PANEL */}
           {activeView === 'admin' && (
             <div className="min-h-screen pt-24 pb-12 bg-gray-50 flex flex-col">
               {!user ? (
