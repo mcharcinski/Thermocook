@@ -10,7 +10,7 @@
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
-  <!-- Skrypty Firebase (dodano auth) -->
+  <!-- Skrypty Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
@@ -55,17 +55,14 @@
       const [activeView, setActiveView] = useState('landing');
       const [isScrolled, setIsScrolled] = useState(false);
       
-      // Formularz kontaktowy
       const [leadName, setLeadName] = useState('');
       const [leadPhone, setLeadPhone] = useState('');
       const [isSubmitting, setIsSubmitting] = useState(false);
       const [submitSuccess, setSubmitSuccess] = useState(false);
       
-      // CRM
       const [leads, setLeads] = useState([]);
       const [isLoadingLeads, setIsLoadingLeads] = useState(false);
 
-      // Autoryzacja (Logowanie)
       const [user, setUser] = useState(null);
       const [loginEmail, setLoginEmail] = useState('');
       const [loginPassword, setLoginPassword] = useState('');
@@ -78,7 +75,6 @@
         return () => window.removeEventListener('scroll', handleScroll);
       }, []);
 
-      // Nasłuchiwanie zmian stanu logowania
       useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((currentUser) => {
           setUser(currentUser);
@@ -189,10 +185,23 @@
                       Umów darmowy pokaz <IconChevron />
                     </a>
                   </div>
+                  
+                  {/* SEKCJA Z PODMIENIONYM FILMEM WIDEO ZAMIAST ZDJĘCIA */}
                   <div className="relative">
                     <div className="absolute inset-0 bg-[#00a859] rounded-3xl transform rotate-3 scale-105 opacity-10 blur-xl"></div>
-                    <img src="https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=2071&auto=format&fit=crop" className="relative rounded-3xl shadow-2xl w-full object-cover h-[500px]" alt="Prezentacja urządzenia" />
+                    <video 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      className="relative rounded-3xl shadow-2xl w-full object-cover h-[500px]"
+                    >
+                      <source src="tm7.mp4" type="video/mp4" />
+                      Twoja przeglądarka nie obsługuje wideo.
+                    </video>
                   </div>
+                  {/* KONIEC SEKCJI WIDEO */}
+
                 </div>
               </section>
 
@@ -234,7 +243,6 @@
           {activeView === 'admin' && (
             <div className="min-h-screen pt-24 pb-12 bg-gray-50 flex flex-col">
               {!user ? (
-                /* EKRAN LOGOWANIA */
                 <div className="max-w-md mx-auto px-4 w-full mt-12">
                   <div className="bg-white rounded-3xl shadow-md border border-gray-100 p-8">
                     <div className="text-center mb-8">
@@ -262,7 +270,6 @@
                   </div>
                 </div>
               ) : (
-                /* WŁAŚCIWY PANEL CRM */
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 w-full">
                   <div className="flex justify-between items-end mb-8">
                     <div>
