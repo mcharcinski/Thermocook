@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
@@ -55,10 +55,10 @@
     const IconInstagram = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>;
     const IconZap = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>;
     const IconClock = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>;
-    const IconHeart = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>;
+    const IconShield = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>;
     const IconBook = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>;
 
-    // Pakiety ofert
+    // Oferty
     const offersData = [
       {
         id: 1,
@@ -126,7 +126,7 @@
       }
     ];
 
-    // Przykładowe przepisy
+    // Przepisy
     const recipesData = [
       {
         title: "Domowy chleb na zakwasie",
@@ -153,13 +153,13 @@
         title: "Zupa krem z pieczonych pomidorów",
         category: "Zupy",
         time: "25 min",
-        desc: "Aromatyczna, gęsta zupa z dodatkiem świeżej bazylii i czosnku,blendowana na idealnie gładką masę.",
+        desc: "Aromatyczna, gęsta zupa z dodatkiem świeżej bazylii i czosnku, blendowana na idealnie gładką masę.",
         img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=1000&auto=format&fit=crop"
       }
     ];
 
     function App() {
-      const [activeView, setActiveView] = useState('landing'); // 'landing' | 'oferta' | 'przepisy' | 'admin'
+      const [activeView, setActiveView] = useState('landing');
       const [isScrolled, setIsScrolled] = useState(false);
       
       const [leadName, setLeadName] = useState('');
@@ -263,24 +263,9 @@
                 <span className="text-2xl font-extrabold tracking-tight">Thermo<span className="text-[#00a859]">cook</span></span>
               </div>
               <div className="hidden md:flex items-center gap-6 font-medium">
-                <button 
-                  onClick={() => navigateTo('landing')} 
-                  className={`transition ${activeView === 'landing' ? 'text-[#00a859] font-bold' : 'hover:text-[#00a859]'}`}
-                >
-                  O Thermomix
-                </button>
-                <button 
-                  onClick={() => navigateTo('oferta')} 
-                  className={`transition ${activeView === 'oferta' ? 'text-[#00a859] font-bold' : 'hover:text-[#00a859]'}`}
-                >
-                  Aktualna oferta
-                </button>
-                <button 
-                  onClick={() => navigateTo('przepisy')} 
-                  className={`transition ${activeView === 'przepisy' ? 'text-[#00a859] font-bold' : 'hover:text-[#00a859]'}`}
-                >
-                  Przepisy
-                </button>
+                <button onClick={() => navigateTo('landing')} className={`transition ${activeView === 'landing' ? 'text-[#00a859] font-bold' : 'hover:text-[#00a859]'}`}>O Thermomix</button>
+                <button onClick={() => navigateTo('oferta')} className={`transition ${activeView === 'oferta' ? 'text-[#00a859] font-bold' : 'hover:text-[#00a859]'}`}>Aktualna oferta</button>
+                <button onClick={() => navigateTo('przepisy')} className={`transition ${activeView === 'przepisy' ? 'text-[#00a859] font-bold' : 'hover:text-[#00a859]'}`}>Przepisy</button>
                 <a href="#kontakt" className="hover:text-[#00a859] transition">Kontakt</a>
                 <a href="https://www.instagram.com/thermocook.warszawa" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition flex items-center gap-1">
                   <IconInstagram /> Instagram
@@ -288,14 +273,12 @@
                 <button onClick={() => navigateTo('admin')} className="text-gray-400 hover:text-gray-900 flex items-center gap-1 ml-2 border-l border-gray-200 pl-4">
                   <IconSettings /> CRM
                 </button>
-                <a href="#kontakt" className="bg-[#00a859] text-white px-5 py-2.5 rounded-full hover:bg-green-600 transition shadow-md">
-                  Umów pokaz
-                </a>
+                <a href="#kontakt" className="bg-[#00a859] text-white px-5 py-2.5 rounded-full hover:bg-green-600 transition shadow-md">Umów pokaz</a>
               </div>
             </div>
           </nav>
 
-          {/* ================= STRONA GŁÓWNA (PREZENTACJA) ================= */}
+          {/* ================= STRONA GŁÓWNA (PREZENTACJA TM7) ================= */}
           {activeView === 'landing' && (
             <main>
               {/* HERO */}
@@ -309,7 +292,7 @@
                       Nowa era <br/><span className="text-[#00a859]">Twojej kuchni.</span>
                     </h1>
                     <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                      Zastąp kilkanaście urządzeń kuchennych jednym intuicyjnym robotem. Odkryj przyjemność z gotowania, oszczędź cenny czas i zaskocz bliskich potrawami jak z najlepszej restauracji.
+                      Zastąp ponad 20 tradycyjnych urządzeń kuchennych jednym inteligentnym robotem TM7[span_2](start_span)[span_2](end_span). Odkryj niemiecką precyzję wykonania, oszczędność miejsca na blacie[span_3](start_span)[span_3](end_span) i kulinarną doskonałość[span_4](start_span)[span_4](end_span).
                     </p>
                     <div className="flex flex-wrap gap-4">
                       <button onClick={() => navigateTo('oferta')} className="inline-flex items-center gap-2 bg-[#00a859] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-600 transition shadow-xl">
@@ -323,13 +306,7 @@
                   
                   <div className="relative">
                     <div className="absolute inset-0 bg-[#00a859] rounded-3xl transform rotate-3 scale-105 opacity-10 blur-xl"></div>
-                    <video 
-                      autoPlay 
-                      loop 
-                      muted 
-                      playsInline 
-                      className="relative rounded-3xl shadow-2xl w-full object-cover h-[520px]"
-                    >
+                    <video autoPlay loop muted playsInline className="relative rounded-3xl shadow-2xl w-full object-cover h-[520px]">
                       <source src="tm7.mp4" type="video/mp4" />
                       Twoja przeglądarka nie obsługuje wideo.
                     </video>
@@ -337,42 +314,42 @@
                 </div>
               </section>
 
-              {/* MOŻLIWOŚCI I ZALETY */}
+              {/* CECHY I TECHNOLOGIA TM7 */}
               <section className="py-24 bg-gray-50 border-t border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6">
                   <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Wszystko w jednym urządzeniu</h2>
-                    <p className="text-lg text-gray-600">Thermomix to nie tylko robot – to kompletna kulinarna rewolucja w Twoim domu.</p>
+                    <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Technologia zaprojektowana dla perfekcji</h2>
+                    <p className="text-lg text-gray-600">Poznaj możliwości, które sprawiają, że gotowanie staje się czystą przyjemnością[span_5](start_span)[span_5](end_span).</p>
                   </div>
 
                   <div className="grid md:grid-cols-3 gap-8">
                     <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
                       <div className="w-14 h-14 bg-green-50 text-[#00a859] rounded-2xl flex items-center justify-center mb-6">
-                        <IconClock />
-                      </div>
-                      <h3 className="text-2xl font-bold mb-3">Oszczędność czasu</h3>
-                      <p className="text-gray-600 leading-relaxed">
-                        Przygotuj obiad dla całej rodziny w 20 minut. Urządzenie samo kontroluje temperaturę, miesza, sieka i pilnuje czasu gotowania za Ciebie.
-                      </p>
-                    </div>
-
-                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                      <div className="w-14 h-14 bg-green-50 text-[#00a859] rounded-2xl flex items-center justify-center mb-6">
-                        <IconHeart />
-                      </div>
-                      <h3 className="text-2xl font-bold mb-3">Zdrowe & świeże posiłki</h3>
-                      <p className="text-gray-600 leading-relaxed">
-                        Pełna kontrola nad składnikami bez konserwantów. Piecz własny chleb, przygotowuj fit desery, dania na parze (Varoma) i domowe przetwory.
-                      </p>
-                    </div>
-
-                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                      <div className="w-14 h-14 bg-green-50 text-[#00a859] rounded-2xl flex items-center justify-center mb-6">
                         <IconZap />
                       </div>
-                      <h3 className="text-2xl font-bold mb-3">Tysiące przepisów Cookidoo</h3>
+                      <h3 className="text-2xl font-bold mb-3">10-calowy Ekran Dotykowy</h3>
                       <p className="text-gray-600 leading-relaxed">
-                        Ekran dotykowy prowadzi Cię krok po kroku przez każdy przepis. Wbudowana waga, intuicyjna nawigacja i stała inspiracja każdego dnia.
+                        Duży, nowoczesny wyświetlacz zapewnia niezwykle płynną obsługę platformy Cookidoo® i gotowania z ustawieniami krok po kroku[span_6](start_span)[span_6](end_span).
+                      </p>
+                    </div>
+
+                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                      <div className="w-14 h-14 bg-green-50 text-[#00a859] rounded-2xl flex items-center justify-center mb-6">
+                        <IconClock />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3">Potężna moc i cicha praca</h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        Silnik nowej generacji pracuje tak cicho, że niemal go nie słychać, a jednocześnie bez trudu kruszy nawet najtwardsze składniki[span_7](start_span)[span_7](end_span).
+                      </p>
+                    </div>
+
+                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                      <div className="w-14 h-14 bg-green-50 text-[#00a859] rounded-2xl flex items-center justify-center mb-6">
+                        <IconShield />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3">Większa przystawka Varoma</h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        Misa w systemie gotowania na parze powiększona o 45%, co pozwala przygotować jeszcze więcej zdrowych posiłków na raz dla całej rodziny[span_8](start_span)[span_8](end_span).
                       </p>
                     </div>
                   </div>
@@ -380,8 +357,8 @@
                   {/* BANER ZAPROSZENIA NA POKAZ */}
                   <div className="mt-16 bg-gray-900 rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8">
                     <div className="max-w-2xl">
-                      <h3 className="text-3xl font-extrabold mb-3">Chcesz zobaczyć go w akcji przed zakupem?</h3>
-                      <p className="text-gray-400 text-lg">Umów się ze mną na bezpłatną, niezobowiązującą prezentację w Warszawie i okolicach. Ugotujemy coś pysznego w Twojej własnej kuchni!</p>
+                      <h3 className="text-3xl font-extrabold mb-3">Przekonaj się na własne oczy</h3>
+                      <p className="text-gray-400 text-lg">Umów się ze mną na bezpłatną, niezobowiązującą prezentację w Warszawie i okolicach. Wspólnie ugotujemy coś wyjątkowego!</p>
                     </div>
                     <a href="#kontakt" className="whitespace-nowrap bg-[#00a859] hover:bg-green-600 text-white font-bold px-8 py-4 rounded-full transition shadow-lg">
                       Zaproś mnie na pokaz
@@ -411,15 +388,7 @@
                     <div key={offer.id} className={`bg-white rounded-3xl shadow-sm border ${offer.special ? 'border-pink-300 ring-4 ring-pink-50' : (offer.highlight ? 'border-[#00a859]/30 ring-4 ring-[#00a859]/5' : 'border-gray-100')} overflow-hidden flex flex-col transition hover:shadow-lg`}>
                       
                       <div className={`p-6 flex justify-center items-center h-56 ${offer.special ? 'bg-pink-50' : 'bg-gray-50'}`}>
-                        <img 
-                          src={offer.img} 
-                          alt={offer.title} 
-                          className="max-h-full object-contain mix-blend-multiply"
-                          onError={(e) => {
-                            e.target.style.display = 'none';
-                            e.target.nextSibling.style.display = 'flex';
-                          }}
-                        />
+                        <img src={offer.img} alt={offer.title} className="max-h-full object-contain mix-blend-multiply" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
                         <div className="hidden flex-col items-center text-gray-400">
                           <span className="text-sm font-medium">Brak pliku {offer.img}</span>
                         </div>
@@ -458,7 +427,6 @@
                         <a href="#kontakt" className="mt-6 block text-center bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 rounded-xl transition">
                           Wybieram tę ofertę
                         </a>
-                        
                       </div>
                     </div>
                   ))}
@@ -506,7 +474,7 @@
 
                 <div className="mt-16 bg-[#00a859]/10 border border-[#00a859]/30 rounded-3xl p-8 sm:p-12 text-center max-w-4xl mx-auto">
                   <h3 className="text-2xl font-bold text-gray-900 mb-3">Chcesz poznać więcej przepisów?</h3>
-                  <p className="text-gray-600 mb-6 max-w-xl mx-auto">Zyskaj dostęp do platformy Cookidoo z ponad 90 tysiącami przepisów z całego świata zintegrowanych z Twoim Thermomixem.</p>
+                  <p className="text-gray-600 mb-6 max-w-xl mx-auto">Zyskaj dostęp do platformy Cookidoo z tysiącami przepisów z całego świata zintegrowanych z Twoim Thermomixem.</p>
                   <button onClick={() => navigateTo('oferta')} className="bg-[#00a859] text-white font-bold px-8 py-3.5 rounded-full hover:bg-green-600 transition shadow-md">
                     Wybierz swój zestaw
                   </button>
