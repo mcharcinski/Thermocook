@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thermocook - Twój Niezależny Przedstawiciel Thermomix</title>
+  <title>Thermocook - Michał</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -18,27 +18,6 @@
   <style>
     html { scroll-behavior: smooth; }
     body { -webkit-font-smoothing: antialiased; }
-    
-    /* Animacje PRO */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      opacity: 0;
-    }
-    .delay-100 { animation-delay: 100ms; }
-    .delay-200 { animation-delay: 200ms; }
-    .delay-300 { animation-delay: 300ms; }
-
-    /* Glassmorphism dla nawigacji */
-    .glass-nav {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900 font-sans">
@@ -63,7 +42,7 @@
     const db = firebase.firestore();
     const auth = firebase.auth();
 
-    // Ikony (dodano ikonę Menu i X do nawigacji mobilnej)
+    // Ikony
     const IconPhone = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>;
     const IconMail = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>;
     const IconSettings = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09A1.65 1.65 0 0 0-1.51 1z"></path></svg>;
@@ -78,43 +57,110 @@
     const IconClock = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>;
     const IconShield = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>;
     const IconBook = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>;
-    const IconMenu = () => <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>;
-    const IconX = () => <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>;
 
-    // Pakiety ofert
+    // Oferty
     const offersData = [
       {
-        id: 1, title: "OFERTA STANDARDOWA", img: "IMG_2216.jpeg", price: "6 669 zł", installment: "206,53 zł", instType: "36 rat (0,6%)", items: ["Thermomix TM7"], savings: "0 zł"
+        id: 1,
+        title: "OFERTA STANDARDOWA",
+        img: "IMG_2216.jpeg",
+        price: "6 669 zł",
+        installment: "206,53 zł",
+        instType: "36 rat (0,6%)",
+        items: ["Thermomix TM7"],
+        savings: "0 zł"
       },
       {
-        id: 2, title: "TM7 + DODATKOWE NACZYNIE", img: "IMG_2217.jpeg", price: "6 670 zł", installment: "206,56 zł", instType: "36 rat (0,6%)", items: ["Thermomix TM7", "Drugie kompletne naczynie miksujące za 1 zł"], savings: "1 409 zł", highlight: true
+        id: 2,
+        title: "TM7 + DODATKOWE NACZYNIE",
+        img: "IMG_2217.jpeg",
+        price: "6 670 zł",
+        installment: "206,56 zł",
+        instType: "36 rat (0,6%)",
+        items: ["Thermomix TM7", "Drugie kompletne naczynie miksujące za 1 zł"],
+        savings: "1 409 zł",
+        highlight: true
       },
       {
-        id: 3, title: "TM7 + ZESTAW Z MIŁOŚCI DO CHLEBA", img: "IMG_2218.jpeg", price: "6 838 zł", installment: "211,76 zł", instType: "36 rat (0,6%)", items: ["Thermomix TM7", "Zestaw akcesoriów do pieczenia chleba", "Garnek żeliwny"], savings: "230 zł"
+        id: 3,
+        title: "TM7 + ZESTAW Z MIŁOŚCI DO CHLEBA",
+        img: "IMG_2218.jpeg",
+        price: "6 838 zł",
+        installment: "211,76 zł",
+        instType: "36 rat (0,6%)",
+        items: ["Thermomix TM7", "Zestaw akcesoriów do pieczenia chleba", "Garnek żeliwny"],
+        savings: "230 zł"
       },
       {
-        id: 4, title: "TM7 + ZESTAW CHLEBOWY + NACZYNIE", img: "IMG_2220.jpeg", price: "6 839 zł", installment: "211,79 zł", instType: "36 rat (0,6%)", items: ["Thermomix TM7", "Zestaw do pieczenia chleba + Garnek żeliwny", "Drugie kompletne naczynie miksujące za 1 zł"], savings: "1 639 zł", highlight: true
+        id: 4,
+        title: "TM7 + ZESTAW CHLEBOWY + NACZYNIE",
+        img: "IMG_2220.jpeg",
+        price: "6 839 zł",
+        installment: "211,79 zł",
+        instType: "36 rat (0,6%)",
+        items: ["Thermomix TM7", "Zestaw do pieczenia chleba + Garnek żeliwny", "Drugie kompletne naczynie miksujące za 1 zł"],
+        savings: "1 639 zł",
+        highlight: true
       },
       {
-        id: 5, title: "OFERTA HALLOWEEN", img: "IMG_2221.jpeg", price: "6 995 zł", installment: "194,31 zł", instType: "36 rat 0% (bez odsetek!)", items: ["Thermomix TM7", "Sensor (wartość 495 zł)", "Forma żeliwna (ok. 200 zł)"], savings: "369 zł", special: true
+        id: 5,
+        title: "OFERTA HALLOWEEN",
+        img: "IMG_2221.jpeg",
+        price: "6 995 zł",
+        installment: "194,31 zł",
+        instType: "36 rat 0% (bez odsetek!)",
+        items: ["Thermomix TM7", "Sensor (wartość 495 zł)", "Forma żeliwna (ok. 200 zł)"],
+        savings: "369 zł",
+        special: true
       },
       {
-        id: 6, title: "OFERTA KREDYTOWA STANDARD", img: "IMG_2222.jpeg", price: "6 996 zł", installment: "216,66 zł", instType: "36 rat (0,6%)", items: ["Thermomix TM7", "Sensor + Forma żeliwna", "Drugie kompletne naczynie miksujące za 1 zł"], savings: "1 778 zł", highlight: true
+        id: 6,
+        title: "OFERTA KREDYTOWA STANDARD",
+        img: "IMG_2222.jpeg",
+        price: "6 996 zł",
+        installment: "216,66 zł",
+        instType: "36 rat (0,6%)",
+        items: ["Thermomix TM7", "Sensor + Forma żeliwna", "Drugie kompletne naczynie miksujące za 1 zł"],
+        savings: "1 778 zł",
+        highlight: true
       }
     ];
 
     // Przepisy
     const recipesData = [
-      { title: "Domowy chleb na zakwasie", category: "Pieczywo", time: "3 h", desc: "Chrupiąca skórka i miękki środek. Z zestawem do pieczenia chleba zrobisz go perfekcyjnie w domowym piekarniku.", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1000&auto=format&fit=crop" },
-      { title: "Kremowe risotto z borowikami", category: "Obiady", time: "30 min", desc: "Idealnie skarmelizowany ryż z grzybami i parmezanem bez ciągłego mieszania przy palniku.", img: "https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?q=80&w=1000&auto=format&fit=crop" },
-      { title: "Fit lody proteinowe z owocami", category: "Desery", time: "5 min", desc: "Błyskawiczny deser z zamrożonych owoców i odżywki białkowej – idealny po treningu.", img: "https://images.unsplash.com/photo-1560008511-11c63416e52d?q=80&w=1000&auto=format&fit=crop" },
-      { title: "Zupa krem z pieczonych pomidorów", category: "Zupy", time: "25 min", desc: "Aromatyczna, gęsta zupa z dodatkiem świeżej bazylii i czosnku, blendowana na idealnie gładką masę.", img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=1000&auto=format&fit=crop" }
+      {
+        title: "Domowy chleb na zakwasie",
+        category: "Pieczywo",
+        time: "3 h",
+        desc: "Chrupiąca skórka i miękki środek. Z zestawem do pieczenia chleba zrobisz go perfekcyjnie w domowym piekarniku.",
+        img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        title: "Kremowe risotto z borowikami",
+        category: "Obiady",
+        time: "30 min",
+        desc: "Idealnie skarmelizowany ryż z grzybami i parmezanem bez ciągłego mieszania przy palniku.",
+        img: "https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        title: "Fit lody proteinowe z owocami",
+        category: "Desery",
+        time: "5 min",
+        desc: "Błyskawiczny deser z zamrożonych owoców i odżywki białkowej – idealny po treningu.",
+        img: "https://images.unsplash.com/photo-1560008511-11c63416e52d?q=80&w=1000&auto=format&fit=crop"
+      },
+      {
+        title: "Zupa krem z pieczonych pomidorów",
+        category: "Zupy",
+        time: "25 min",
+        desc: "Aromatyczna, gęsta zupa z dodatkiem świeżej bazylii i czosnku, blendowana na idealnie gładką masę.",
+        img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=1000&auto=format&fit=crop"
+      }
     ];
 
     function App() {
       const [activeView, setActiveView] = useState('landing');
       const [isScrolled, setIsScrolled] = useState(false);
-      const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Stan mobilnego menu
       
       const [leadName, setLeadName] = useState('');
       const [leadPhone, setLeadPhone] = useState('');
@@ -131,7 +177,7 @@
       const [isLoggingIn, setIsLoggingIn] = useState(false);
 
       useEffect(() => {
-        const handleScroll = () => setIsScrolled(window.scrollY > 20);
+        const handleScroll = () => setIsScrolled(window.scrollY > 40);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
       }, []);
@@ -148,7 +194,6 @@
 
       const navigateTo = (view) => {
         setActiveView(view);
-        setIsMobileMenuOpen(false); // Zamknij menu mobilne przy nawigacji
         window.scrollTo({ top: 0, behavior: 'smooth' });
       };
 
@@ -178,7 +223,7 @@
             phone: leadPhone,
             status: "Nowy",
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            date: new Date().toLocaleDateString('pl-PL') + ' ' + new Date().toLocaleTimeString('pl-PL', {hour: '2-digit', minute:'2-digit'})
+            date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
           });
           setSubmitSuccess(true);
           setLeadName('');
@@ -203,67 +248,377 @@
         setIsLoggingIn(false);
       };
 
-      const handleLogout = () => auth.signOut();
+      const handleLogout = () => {
+        auth.signOut();
+      };
 
       return (
         <div className="min-h-screen bg-gray-50 text-gray-900 selection:bg-green-200 flex flex-col justify-between">
           
-          {/* ================= NAWIGACJA GŁÓWNA ================= */}
-          <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'glass-nav py-3 shadow-sm' : 'bg-transparent py-5'}`}>
+          {/* NAWIGACJA */}
+          <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || activeView !== 'landing' ? 'bg-white shadow-sm py-3' : 'bg-transparent py-5'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
-              
-              {/* LOGO */}
-              <div className="flex items-center gap-2 cursor-pointer z-50" onClick={() => navigateTo('landing')}>
+              <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigateTo('landing')}>
                 <div className="w-10 h-10 bg-[#00a859] text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg">Tc</div>
                 <span className="text-2xl font-extrabold tracking-tight">Thermo<span className="text-[#00a859]">cook</span></span>
               </div>
-              
-              {/* DESKTOP MENU */}
-              <div className="hidden lg:flex items-center gap-7 font-medium">
+              <div className="hidden md:flex items-center gap-6 font-medium">
                 <button onClick={() => navigateTo('landing')} className={`transition ${activeView === 'landing' ? 'text-[#00a859] font-bold' : 'hover:text-[#00a859]'}`}>O Thermomix</button>
                 <button onClick={() => navigateTo('oferta')} className={`transition ${activeView === 'oferta' ? 'text-[#00a859] font-bold' : 'hover:text-[#00a859]'}`}>Aktualna oferta</button>
                 <button onClick={() => navigateTo('przepisy')} className={`transition ${activeView === 'przepisy' ? 'text-[#00a859] font-bold' : 'hover:text-[#00a859]'}`}>Przepisy</button>
                 <a href="#kontakt" className="hover:text-[#00a859] transition">Kontakt</a>
-                
-                <div className="w-px h-6 bg-gray-200 mx-2"></div>
-                
                 <a href="https://www.instagram.com/thermocook.warszawa" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-600 transition flex items-center gap-1">
-                  <IconInstagram /> 
+                  <IconInstagram /> Instagram
                 </a>
-                <button onClick={() => navigateTo('admin')} className="text-gray-400 hover:text-gray-900 flex items-center transition" title="Panel CRM">
-                  <IconSettings />
+                <button onClick={() => navigateTo('admin')} className="text-gray-400 hover:text-gray-900 flex items-center gap-1 ml-2 border-l border-gray-200 pl-4">
+                  <IconSettings /> CRM
                 </button>
-                <a href="#kontakt" className="bg-[#00a859] text-white px-6 py-2.5 rounded-full hover:bg-green-600 transition shadow-md font-bold ml-2">Umów pokaz</a>
+                <a href="#kontakt" className="bg-[#00a859] text-white px-5 py-2.5 rounded-full hover:bg-green-600 transition shadow-md">Umów pokaz</a>
               </div>
-
-              {/* MOBILE MENU BUTTON */}
-              <div className="lg:hidden flex items-center z-50">
-                <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-gray-900 p-2 focus:outline-none">
-                  {isMobileMenuOpen ? <IconX /> : <IconMenu />}
-                </button>
-              </div>
-
             </div>
           </nav>
 
-          {/* ================= MOBILE MENU OVERLAY ================= */}
-          {isMobileMenuOpen && (
-            <div className="fixed inset-0 bg-white z-40 flex flex-col justify-center items-center gap-8 text-2xl font-bold lg:hidden animate-fade-in">
-              <button onClick={() => navigateTo('landing')} className={activeView === 'landing' ? 'text-[#00a859]' : 'text-gray-900'}>O Thermomix</button>
-              <button onClick={() => navigateTo('oferta')} className={activeView === 'oferta' ? 'text-[#00a859]' : 'text-gray-900'}>Aktualna oferta</button>
-              <button onClick={() => navigateTo('przepisy')} className={activeView === 'przepisy' ? 'text-[#00a859]' : 'text-gray-900'}>Przepisy</button>
-              <a href="#kontakt" onClick={() => setIsMobileMenuOpen(false)} className="text-gray-900">Kontakt</a>
-              <div className="flex gap-6 mt-4">
-                <a href="https://www.instagram.com/thermocook.warszawa" target="_blank" rel="noopener noreferrer" className="text-pink-600 p-3 bg-pink-50 rounded-full"><IconInstagram /></a>
-                <button onClick={() => navigateTo('admin')} className="text-gray-600 p-3 bg-gray-100 rounded-full"><IconSettings /></button>
-              </div>
-              <a href="#kontakt" onClick={() => setIsMobileMenuOpen(false)} className="bg-[#00a859] text-white px-8 py-4 rounded-full mt-4 shadow-lg">Umów pokaz</a>
-            </div>
-          )}
-
-          {/* ================= WIDOK: STRONA GŁÓWNA ================= */}
+          {/* ================= STRONA GŁÓWNA (PREZENTACJA TM7) ================= */}
           {activeView === 'landing' && (
             <main>
               {/* HERO */}
               <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 bg-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 items-center">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 text-green-700 font-semibold text-sm mb-6">
+                      <IconStar /> Autoryzowany Przedstawiciel Thermomix
+                    </div>
+                    <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                      Nowa era <br/><span className="text-[#00a859]">Twojej kuchni.</span>
+                    </h1>
+                    <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                      Zastąp ponad 20 tradycyjnych urządzeń kuchennych jednym inteligentnym robotem TM7. Odkryj niemiecką precyzję wykonania, oszczędność miejsca na blacie i kulinarną doskonałość.
+                    </p>
+                    <div className="flex flex-wrap gap-4">
+                      <button onClick={() => navigateTo('oferta')} className="inline-flex items-center gap-2 bg-[#00a859] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-600 transition shadow-xl">
+                        Zobacz aktualną ofertę <IconChevron />
+                      </button>
+                      <button onClick={() => navigateTo('przepisy')} className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 border-2 border-gray-100 transition shadow-sm">
+                        Zobacz przepisy <IconBook />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-[#00a859] rounded-3xl transform rotate-3 scale-105 opacity-10 blur-xl"></div>
+                    <video autoPlay loop muted playsInline className="relative rounded-3xl shadow-2xl w-full object-cover h-[520px]">
+                      <source src="tm7.mp4" type="video/mp4" />
+                      Twoja przeglądarka nie obsługuje wideo.
+                    </video>
+                  </div>
+                </div>
+              </section>
+
+              {/* CECHY I TECHNOLOGIA TM7 */}
+              <section className="py-24 bg-gray-50 border-t border-gray-100">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                  <div className="text-center max-w-3xl mx-auto mb-16">
+                    <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Technologia zaprojektowana dla perfekcji</h2>
+                    <p className="text-lg text-gray-600">Poznaj możliwości, które sprawiają, że gotowanie staje się czystą przyjemnością.</p>
+                  </div>
+
+                  <div className="grid md:grid-cols-3 gap-8">
+                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                      <div className="w-14 h-14 bg-green-50 text-[#00a859] rounded-2xl flex items-center justify-center mb-6">
+                        <IconZap />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3">10-calowy Ekran Dotykowy</h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        Duży, nowoczesny wyświetlacz zapewnia niezwykle płynną obsługę platformy Cookidoo® i gotowania z ustawieniami krok po kroku.
+                      </p>
+                    </div>
+
+                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                      <div className="w-14 h-14 bg-green-50 text-[#00a859] rounded-2xl flex items-center justify-center mb-6">
+                        <IconClock />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3">Potężna moc i cicha praca</h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        Silnik nowej generacji pracuje tak cicho, że niemal go nie słychać, a jednocześnie bez trudu kruszy nawet najtwardsze składniki.
+                      </p>
+                    </div>
+
+                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                      <div className="w-14 h-14 bg-green-50 text-[#00a859] rounded-2xl flex items-center justify-center mb-6">
+                        <IconShield />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3">Większa przystawka Varoma</h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        Misa w systemie gotowania na parze powiększona o 45%, co pozwala przygotować jeszcze więcej zdrowych posiłków na raz dla całej rodziny.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* BANER ZAPROSZENIA NA POKAZ */}
+                  <div className="mt-16 bg-gray-900 rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div className="max-w-2xl">
+                      <h3 className="text-3xl font-extrabold mb-3">Przekonaj się na własne oczy</h3>
+                      <p className="text-gray-400 text-lg">Umów się ze mną na bezpłatną, niezobowiązującą prezentację w Warszawie i okolicach. Wspólnie ugotujemy coś wyjątkowego!</p>
+                    </div>
+                    <a href="#kontakt" className="whitespace-nowrap bg-[#00a859] hover:bg-green-600 text-white font-bold px-8 py-4 rounded-full transition shadow-lg">
+                      Zaproś mnie na pokaz
+                    </a>
+                  </div>
+                </div>
+              </section>
+            </main>
+          )}
+
+          {/* ================= PODSTRONA: AKTUALNA OFERTA ================= */}
+          {activeView === 'oferta' && (
+            <main className="pt-32 pb-24 bg-gray-50">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                <div className="text-center mb-16 max-w-3xl mx-auto">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 text-green-700 font-semibold text-sm mb-4">
+                    <IconGift /> Oficjalny cennik i pakiety
+                  </div>
+                  <h1 className="text-4xl lg:text-5xl font-extrabold mb-6 text-gray-900">Aktualna Oferta</h1>
+                  <p className="text-xl text-gray-600 font-medium">
+                    Płatność gotówką, przelewem lub <span className="text-[#00a859] font-bold">dogodne raty.</span>
+                  </p>
+                </div>
+                
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {offersData.map(offer => (
+                    <div key={offer.id} className={`bg-white rounded-3xl shadow-sm border ${offer.special ? 'border-pink-300 ring-4 ring-pink-50' : (offer.highlight ? 'border-[#00a859]/30 ring-4 ring-[#00a859]/5' : 'border-gray-100')} overflow-hidden flex flex-col transition hover:shadow-lg`}>
+                      
+                      <div className={`p-6 flex justify-center items-center h-56 ${offer.special ? 'bg-pink-50' : 'bg-gray-50'}`}>
+                        <img src={offer.img} alt={offer.title} className="max-h-full object-contain mix-blend-multiply" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
+                        <div className="hidden flex-col items-center text-gray-400">
+                          <span className="text-sm font-medium">Brak pliku {offer.img}</span>
+                        </div>
+                      </div>
+
+                      <div className="p-8 flex flex-col flex-grow">
+                        <div className="text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Opcja {offer.id}</div>
+                        <h3 className={`text-xl font-extrabold mb-6 min-h-[3.5rem] leading-tight ${offer.special ? 'text-pink-600' : 'text-gray-900'}`}>{offer.title}</h3>
+                        
+                        <div className="mb-6 pb-6 border-b border-gray-100">
+                          <div className="text-4xl font-extrabold text-gray-900 mb-2">{offer.price}</div>
+                          <div className="text-gray-600">
+                            Rata: <span className="font-bold text-gray-900">{offer.installment}</span>
+                            <div className="text-sm text-gray-500">{offer.instType}</div>
+                          </div>
+                        </div>
+
+                        <div className="flex-grow">
+                          <div className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                            <IconGift /> Co otrzymujesz?
+                          </div>
+                          <ul className="space-y-3 mb-8">
+                            {offer.items.map((item, idx) => (
+                              <li key={idx} className="flex gap-3 text-sm text-gray-600 leading-relaxed">
+                                <span className="text-[#00a859] font-bold mt-0.5">•</span> {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className={`mt-auto p-4 rounded-2xl text-center ${offer.savings !== '0 zł' ? 'bg-[#00a859]/10 text-[#00a859]' : 'bg-gray-100 text-gray-600'}`}>
+                          <div className="text-sm font-bold uppercase tracking-wide mb-1">Korzyść finansowa</div>
+                          <div className="text-2xl font-extrabold">{offer.savings}</div>
+                        </div>
+
+                        <a href="#kontakt" className="mt-6 block text-center bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 rounded-xl transition">
+                          Wybieram tę ofertę
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </main>
+          )}
+
+          {/* ================= PODSTRONA: PRZEPISY ================= */}
+          {activeView === 'przepisy' && (
+            <main className="pt-32 pb-24 bg-gray-50">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                <div className="text-center mb-16 max-w-3xl mx-auto">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 text-green-700 font-semibold text-sm mb-4">
+                    <IconBook /> Kulinarna inspiracja
+                  </div>
+                  <h1 className="text-4xl lg:text-5xl font-extrabold mb-6 text-gray-900">Przepisy z Thermomix</h1>
+                  <p className="text-xl text-gray-600 font-medium">
+                    Zobacz, co możesz łatwo przygotować w swojej kuchni każdego dnia.
+                  </p>
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                  {recipesData.map((recipe, index) => (
+                    <div key={index} className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex flex-col transition hover:shadow-lg">
+                      <div className="h-48 overflow-hidden relative">
+                        <img src={recipe.img} alt={recipe.title} className="w-full h-full object-cover transform hover:scale-105 transition duration-500" />
+                        <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+                          {recipe.category}
+                        </span>
+                      </div>
+                      <div className="p-6 flex flex-col flex-grow">
+                        <div className="flex items-center gap-1.5 text-xs text-gray-400 font-semibold mb-2">
+                          <IconClock /> Czas przygotowania: {recipe.time}
+                        </div>
+                        <h3 className="text-xl font-extrabold mb-3 text-gray-900 leading-snug">{recipe.title}</h3>
+                        <p className="text-sm text-gray-600 leading-relaxed mb-6 flex-grow">{recipe.desc}</p>
+                        <a href="#kontakt" className="block text-center bg-gray-50 hover:bg-[#00a859] hover:text-white text-gray-900 font-semibold py-2.5 rounded-xl transition border border-gray-200">
+                          Chcę taki przepis!
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-16 bg-[#00a859]/10 border border-[#00a859]/30 rounded-3xl p-8 sm:p-12 text-center max-w-4xl mx-auto">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Chcesz poznać więcej przepisów?</h3>
+                  <p className="text-gray-600 mb-6 max-w-xl mx-auto">Zyskaj dostęp do platformy Cookidoo z tysiącami przepisów z całego świata zintegrowanych z Twoim Thermomixem.</p>
+                  <button onClick={() => navigateTo('oferta')} className="bg-[#00a859] text-white font-bold px-8 py-3.5 rounded-full hover:bg-green-600 transition shadow-md">
+                    Wybierz swój zestaw
+                  </button>
+                </div>
+              </div>
+            </main>
+          )}
+
+          {/* ================= PANEL CRM ADMINA ================= */}
+          {activeView === 'admin' && (
+            <div className="min-h-screen pt-28 pb-16 bg-gray-50 flex flex-col">
+              {!user ? (
+                <div className="max-w-md mx-auto px-4 w-full mt-10">
+                  <div className="bg-white rounded-3xl shadow-md border border-gray-100 p-8">
+                    <div className="text-center mb-8">
+                      <div className="w-16 h-16 bg-[#00a859]/10 text-[#00a859] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <IconSettings />
+                      </div>
+                      <h2 className="text-2xl font-extrabold text-gray-900">Panel CRM</h2>
+                      <p className="text-gray-500 mt-2">Zaloguj się, aby zarządzać kontaktami</p>
+                    </div>
+
+                    <form onSubmit={handleLogin} className="space-y-4">
+                      {authError && <div className="text-red-500 text-sm bg-red-50 p-3 rounded-xl border border-red-100">{authError}</div>}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Adres e-mail</label>
+                        <input type="email" value={loginEmail} onChange={e=>setLoginEmail(e.target.value)} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#00a859] outline-none transition" required />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Hasło</label>
+                        <input type="password" value={loginPassword} onChange={e=>setLoginPassword(e.target.value)} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#00a859] outline-none transition" required />
+                      </div>
+                      <button type="submit" disabled={isLoggingIn} className="w-full bg-gray-900 text-white font-bold py-3.5 rounded-xl hover:bg-gray-800 transition mt-2">
+                        {isLoggingIn ? 'Logowanie...' : 'Zaloguj się'}
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              ) : (
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 w-full">
+                  <div className="flex justify-between items-end mb-8">
+                    <div>
+                      <h1 className="text-3xl font-extrabold text-gray-900">Panel CRM</h1>
+                      <p className="text-gray-500 mt-1">Zalogowano: <span className="font-semibold text-gray-700">{user.email}</span></p>
+                    </div>
+                    <button onClick={handleLogout} className="flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-red-600 transition bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+                      <IconLogOut /> Wyloguj
+                    </button>
+                  </div>
+                  
+                  <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
+                    <div className="flex justify-between items-center mb-6">
+                      <h2 className="text-xl font-bold">Zgłoszenia ze strony</h2>
+                      <button onClick={fetchLeads} className="text-sm font-semibold text-[#00a859] hover:underline">Odśwież dane</button>
+                    </div>
+                    
+                    {isLoadingLeads ? (
+                      <div className="text-center py-10 text-gray-500">Pobieranie z bazy...</div>
+                    ) : leads.length === 0 ? (
+                      <div className="text-center py-10 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
+                        <div className="flex justify-center text-gray-300 mb-3"><IconUsers /></div>
+                        <p className="font-semibold text-gray-600">Brak nowych zgłoszeń</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {leads.map(lead => (
+                          <div key={lead.id} className="flex justify-between items-center p-4 border border-gray-100 rounded-xl hover:shadow-md transition bg-white">
+                            <div className="flex gap-4 items-center">
+                              <div className="w-12 h-12 bg-[#00a859]/10 rounded-full flex items-center justify-center text-[#00a859] font-bold text-xl uppercase">
+                                {lead.name.charAt(0)}
+                              </div>
+                              <div>
+                                <p className="font-bold text-lg">{lead.name}</p>
+                                <p className="text-gray-500 flex items-center gap-1 text-sm"><IconPhone /> {lead.phone}</p>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold uppercase">{lead.status}</span>
+                              <div className="text-xs text-gray-400 mt-2">{lead.date || 'Brak daty'}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ================= STOPKA / KONTAKT ================= */}
+          <footer id="kontakt" className="bg-gray-900 text-white pt-24 pb-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-16">
+              <div>
+                <h2 className="text-3xl font-extrabold mb-6">Zaproś mnie do swojej kuchni</h2>
+                <p className="text-gray-400 mb-8 text-lg">Zostaw kontakt, a oddzwonię do Ciebie, by ustalić szczegóły niezobowiązującej prezentacji (Warszawa i okolice).</p>
+                
+                <div className="space-y-6">
+                  <a href="tel:+48608485105" className="flex items-center gap-4 text-xl font-medium group w-fit text-gray-300 hover:text-[#00a859] transition">
+                    <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-[#00a859] group-hover:bg-[#00a859] group-hover:text-white transition-all shadow-lg"><IconPhone /></div>
+                    Michał +48 608 485 105
+                  </a>
+
+                  <a href="mailto:kontakt@thermocook.pl" className="flex items-center gap-4 text-xl font-medium group w-fit text-gray-300 hover:text-[#00a859] transition">
+                    <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-[#00a859] group-hover:bg-[#00a859] group-hover:text-white transition-all shadow-lg"><IconMail /></div>
+                    kontakt@thermocook.pl
+                  </a>
+                  
+                  <a href="https://www.instagram.com/thermocook.warszawa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-xl font-medium group w-fit text-gray-300 hover:text-pink-500 transition">
+                    <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-pink-500 group-hover:bg-pink-500 group-hover:text-white transition-all shadow-lg"><IconInstagram /></div>
+                    @thermocook.warszawa
+                  </a>
+                </div>
+              </div>
+              
+              <div className="bg-gray-800 p-8 rounded-3xl">
+                <h3 className="text-2xl font-bold mb-6">Zostaw wiadomość</h3>
+                {submitSuccess ? (
+                  <div className="bg-[#00a859]/20 text-[#00a859] p-6 rounded-xl flex items-center gap-3 border border-[#00a859]/30">
+                    <IconCheck />
+                    <div>
+                      <p className="font-bold">Zgłoszenie wysłane!</p>
+                      <p className="text-sm">Skontaktuję się najszybciej, jak to możliwe.</p>
+                    </div>
+                  </div>
+                ) : (
+                  <form className="space-y-4" onSubmit={handleContactSubmit}>
+                    <input type="text" placeholder="Twoje imię" value={leadName} onChange={e=>setLeadName(e.target.value)} className="w-full bg-gray-900 border-none rounded-xl px-4 py-4 text-white placeholder-gray-500 focus:ring-2 focus:ring-[#00a859] outline-none" required />
+                    <input type="tel" placeholder="Numer telefonu" value={leadPhone} onChange={e=>setLeadPhone(e.target.value)} className="w-full bg-gray-900 border-none rounded-xl px-4 py-4 text-white placeholder-gray-500 focus:ring-2 focus:ring-[#00a859] outline-none" required />
+                    <button type="submit" disabled={isSubmitting} className="w-full bg-[#00a859] text-white font-bold py-4 rounded-xl hover:bg-green-600 transition disabled:opacity-50">
+                      {isSubmitting ? 'Wysyłanie...' : 'Wyślij prośbę o kontakt'}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+          </footer>
+
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
