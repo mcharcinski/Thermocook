@@ -222,4 +222,251 @@
                 {activeView === 'landing' ? (
                   <>
                     <a href="#oferta" className="hover:text-[#00a859] transition">Oferta</a>
-                    <a href="#kontakt" className="hover:text-[#00a859] transition">Kontakt
+                    <a href="#kontakt" className="hover:text-[#00a859] transition">Kontakt</a>
+                    <button onClick={() => setActiveView('admin')} className="text-gray-400 hover:text-gray-900 flex items-center gap-1">
+                      <IconSettings /> Panel CRM
+                    </button>
+                    <a href="#kontakt" className="bg-[#00a859] text-white px-6 py-2.5 rounded-full hover:bg-green-600 transition shadow-md">Umów pokaz</a>
+                  </>
+                ) : (
+                  <button onClick={() => setActiveView('landing')} className="bg-gray-900 text-white px-6 py-2.5 rounded-full hover:bg-gray-800 transition shadow-md">
+                    Wróć na stronę
+                  </button>
+                )}
+              </div>
+            </div>
+          </nav>
+
+          {activeView === 'landing' && (
+            <main>
+              {/* HERO SECTION */}
+              <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 items-center">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 text-green-700 font-semibold text-sm mb-6">
+                      <IconStar /> Autoryzowany Przedstawiciel
+                    </div>
+                    <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                      Twój nowy <br/><span className="text-[#00a859]">wymiar gotowania.</span>
+                    </h1>
+                    <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                      Poznaj Thermomix TM7 z Michałem – Twoim osobistym doradcą w Warszawie i okolicach. Nowoczesne technologie i wyjątkowe raty czekają na Ciebie.
+                    </p>
+                    <div className="flex gap-4">
+                      <a href="#kontakt" className="inline-flex items-center gap-2 bg-gray-900 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-800 transition shadow-xl">
+                        Umów darmowy pokaz <IconChevron />
+                      </a>
+                      <a href="#oferta" className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 border-2 border-gray-100 transition shadow-sm hidden sm:flex">
+                        Zobacz cennik
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-[#00a859] rounded-3xl transform rotate-3 scale-105 opacity-10 blur-xl"></div>
+                    <video 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      className="relative rounded-3xl shadow-2xl w-full object-cover h-[500px]"
+                    >
+                      <source src="tm7.mp4" type="video/mp4" />
+                      Twoja przeglądarka nie obsługuje wideo.
+                    </video>
+                  </div>
+                </div>
+              </section>
+
+              {/* SEKCJA OFERTA */}
+              <section id="oferta" className="py-24 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                  <div className="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 text-gray-900">Wybierz ofertę z najlepszą korzyścią dla Ciebie!</h2>
+                    <p className="text-xl text-gray-600 font-medium">
+                      Płatność gotówką, przelewem lub <span className="text-[#00a859] font-bold">dogodne raty.</span>
+                    </p>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {offersData.map(offer => (
+                      <div key={offer.id} className={`bg-white rounded-3xl shadow-sm border ${offer.special ? 'border-pink-300 ring-4 ring-pink-50' : (offer.highlight ? 'border-[#00a859]/30 ring-4 ring-[#00a859]/5' : 'border-gray-100')} overflow-hidden flex flex-col transition hover:shadow-lg`}>
+                        
+                        <div className={`p-6 flex justify-center items-center h-56 ${offer.special ? 'bg-pink-50' : 'bg-gray-50'}`}>
+                          <img 
+                            src={offer.img} 
+                            alt={offer.title} 
+                            className="max-h-full object-contain mix-blend-multiply"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'flex';
+                            }}
+                          />
+                          <div className="hidden flex-col items-center text-gray-400">
+                            <span className="text-sm font-medium">Brak pliku {offer.img}</span>
+                          </div>
+                        </div>
+
+                        <div className="p-8 flex flex-col flex-grow">
+                          <div className="text-sm font-bold text-gray-400 mb-2 uppercase tracking-wider">Opcja {offer.id}</div>
+                          <h3 className={`text-xl font-extrabold mb-6 min-h-[3.5rem] leading-tight ${offer.special ? 'text-pink-600' : 'text-gray-900'}`}>{offer.title}</h3>
+                          
+                          <div className="mb-6 pb-6 border-b border-gray-100">
+                            <div className="text-4xl font-extrabold text-gray-900 mb-2">{offer.price}</div>
+                            <div className="text-gray-600">
+                              Rata: <span className="font-bold text-gray-900">{offer.installment}</span>
+                              <div className="text-sm text-gray-500">{offer.instType}</div>
+                            </div>
+                          </div>
+
+                          <div className="flex-grow">
+                            <div className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                              <IconGift /> Co otrzymujesz?
+                            </div>
+                            <ul className="space-y-3 mb-8">
+                              {offer.items.map((item, idx) => (
+                                <li key={idx} className="flex gap-3 text-sm text-gray-600 leading-relaxed">
+                                  <span className="text-[#00a859] font-bold mt-0.5">•</span> {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div className={`mt-auto p-4 rounded-2xl text-center ${offer.savings !== '0 zł' ? 'bg-[#00a859]/10 text-[#00a859]' : 'bg-gray-100 text-gray-600'}`}>
+                            <div className="text-sm font-bold uppercase tracking-wide mb-1">Korzyść finansowa</div>
+                            <div className="text-2xl font-extrabold">{offer.savings}</div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              {/* SEKCJA KONTAKTOWA */}
+              <footer id="kontakt" className="bg-gray-900 text-white pt-24 pb-12">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-16">
+                  <div>
+                    <h2 className="text-3xl font-extrabold mb-6">Zaproś mnie do swojej kuchni</h2>
+                    <p className="text-gray-400 mb-8 text-lg">Zostaw kontakt, a oddzwonię do Ciebie, by ustalić szczegóły niezobowiązującej prezentacji (Warszawa i okolice).</p>
+                    <div className="flex items-center gap-4 text-xl font-medium">
+                      <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-[#00a859]"><IconPhone /></div>
+                      Michał +48 608 485 105
+                    </div>
+                  </div>
+                  <div className="bg-gray-800 p-8 rounded-3xl">
+                    <h3 className="text-2xl font-bold mb-6">Zostaw wiadomość</h3>
+                    {submitSuccess ? (
+                      <div className="bg-[#00a859]/20 text-[#00a859] p-6 rounded-xl flex items-center gap-3 border border-[#00a859]/30">
+                        <IconCheck />
+                        <div>
+                          <p className="font-bold">Zgłoszenie wysłane!</p>
+                          <p className="text-sm">Zajrzyj teraz do panelu CRM na górze strony.</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <form className="space-y-4" onSubmit={handleContactSubmit}>
+                        <input type="text" placeholder="Twoje imię" value={leadName} onChange={e=>setLeadName(e.target.value)} className="w-full bg-gray-900 border-none rounded-xl px-4 py-4 text-white placeholder-gray-500 focus:ring-2 focus:ring-[#00a859] outline-none" required />
+                        <input type="tel" placeholder="Numer telefonu" value={leadPhone} onChange={e=>setLeadPhone(e.target.value)} className="w-full bg-gray-900 border-none rounded-xl px-4 py-4 text-white placeholder-gray-500 focus:ring-2 focus:ring-[#00a859] outline-none" required />
+                        <button type="submit" disabled={isSubmitting} className="w-full bg-[#00a859] text-white font-bold py-4 rounded-xl hover:bg-green-600 transition disabled:opacity-50">
+                          {isSubmitting ? 'Wysyłanie...' : 'Wyślij prośbę o kontakt'}
+                        </button>
+                      </form>
+                    )}
+                  </div>
+                </div>
+              </footer>
+            </main>
+          )}
+
+          {/* CRM ADMIN PANEL */}
+          {activeView === 'admin' && (
+            <div className="min-h-screen pt-24 pb-12 bg-gray-50 flex flex-col">
+              {!user ? (
+                <div className="max-w-md mx-auto px-4 w-full mt-12">
+                  <div className="bg-white rounded-3xl shadow-md border border-gray-100 p-8">
+                    <div className="text-center mb-8">
+                      <div className="w-16 h-16 bg-[#00a859]/10 text-[#00a859] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <IconSettings />
+                      </div>
+                      <h2 className="text-2xl font-extrabold text-gray-900">Panel CRM</h2>
+                      <p className="text-gray-500 mt-2">Zaloguj się, aby uzyskać dostęp</p>
+                    </div>
+
+                    <form onSubmit={handleLogin} className="space-y-4">
+                      {authError && <div className="text-red-500 text-sm bg-red-50 p-3 rounded-xl border border-red-100">{authError}</div>}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Adres e-mail</label>
+                        <input type="email" value={loginEmail} onChange={e=>setLoginEmail(e.target.value)} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#00a859] outline-none transition" required />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Hasło</label>
+                        <input type="password" value={loginPassword} onChange={e=>setLoginPassword(e.target.value)} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#00a859] outline-none transition" required />
+                      </div>
+                      <button type="submit" disabled={isLoggingIn} className="w-full bg-gray-900 text-white font-bold py-3.5 rounded-xl hover:bg-gray-800 transition mt-2">
+                        {isLoggingIn ? 'Logowanie...' : 'Zaloguj się'}
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              ) : (
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 w-full">
+                  <div className="flex justify-between items-end mb-8">
+                    <div>
+                      <h1 className="text-3xl font-extrabold text-gray-900">Panel CRM</h1>
+                      <p className="text-gray-500 mt-1">Zalogowano jako: <span className="font-semibold text-gray-700">{user.email}</span></p>
+                    </div>
+                    <button onClick={handleLogout} className="flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-red-600 transition bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+                      <IconLogOut /> Wyloguj
+                    </button>
+                  </div>
+                  
+                  <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
+                    <div className="flex justify-between items-center mb-6">
+                      <h2 className="text-xl font-bold">Zgłoszenia ze strony</h2>
+                      <button onClick={fetchLeads} className="text-sm font-semibold text-[#00a859] hover:underline">Odśwież dane</button>
+                    </div>
+                    
+                    {isLoadingLeads ? (
+                      <div className="text-center py-10 text-gray-500">Pobieranie z bazy...</div>
+                    ) : leads.length === 0 ? (
+                      <div className="text-center py-10 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
+                        <div className="flex justify-center text-gray-300 mb-3"><IconUsers /></div>
+                        <p className="font-semibold text-gray-600">Brak zgłoszeń</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {leads.map(lead => (
+                          <div key={lead.id} className="flex justify-between items-center p-4 border border-gray-100 rounded-xl hover:shadow-md transition bg-white">
+                            <div className="flex gap-4 items-center">
+                              <div className="w-12 h-12 bg-[#00a859]/10 rounded-full flex items-center justify-center text-[#00a859] font-bold text-xl uppercase">
+                                {lead.name.charAt(0)}
+                              </div>
+                              <div>
+                                <p className="font-bold text-lg">{lead.name}</p>
+                                <p className="text-gray-500 flex items-center gap-1 text-sm"><IconPhone /> {lead.phone}</p>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold uppercase">{lead.status}</span>
+                              <div className="text-xs text-gray-400 mt-2">{lead.date || 'Brak daty'}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
